@@ -52,6 +52,11 @@ function update()
         console.log("Created New Bullet");
         initialTime = 10;
     }
+
+
+    player.x = this.input.mousePointer.x;
+
+    
     updateBullets();
     initialTime --; // One second
     
