@@ -8,6 +8,7 @@ let isKeyDown = false;
 let player;
 let initialTime = 0;
 
+
 var config = {
     type: Phaser.AUTO,
     width: window.innerWidth,
@@ -36,17 +37,15 @@ function preload()
 
 function create()
 {
-    
+    // Skapar Apan//
     player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
 
-    this.input.keyboard.on('keydown_A', keysDown, this);
-    this.input.keyboard.on('keydown_D', keysDown, this);
-    this.input.keyboard.on('keyup_A', keysUp, this);
-    this.input.keyboard.on('keyup_A', keysUp, this);
 }
 
 function update()
 {
+
+    //Skapar en bullet med en timer som skjuts från apan//
     if(game.input.activePointer.isDown && initialTime <= 0)
     {
         bullets.push(this.add.sprite(player.x + 24 , player.y - 30, 'bullet'));
@@ -55,10 +54,6 @@ function update()
     }
     updateBullets();
     initialTime --; // One second
-    
-    
-    // Movement
-    
     
     
 }
@@ -91,6 +86,8 @@ function keysDown(e)
     }
 }
 
+
+//Funktionen för bananerna//
 function updateBullets()
 {
     for (let i = 0; i < bullets.length; i++){
