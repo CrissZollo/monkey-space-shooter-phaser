@@ -6,7 +6,7 @@ let value = 0;
 let isKeyUp = false;
 let isKeyDown = false;
 let player;
-
+let initialTime = 0;
 
 var config = {
     type: Phaser.AUTO,
@@ -37,8 +37,8 @@ function preload()
 function create()
 {
     
-    player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 2,'player');
-    
+    player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
+
     this.input.keyboard.on('keydown_A', keysDown, this);
     this.input.keyboard.on('keydown_D', keysDown, this);
     this.input.keyboard.on('keyup_A', keysUp, this);
@@ -47,13 +47,15 @@ function create()
 
 function update()
 {
-    if(game.input.activePointer.isDown)
+    if(game.input.activePointer.isDown && initialTime <= 0)
     {
-        bullets.push(this.add.sprite(player.x + 23 , player.y - 37, 'bullet'));
+        bullets.push(this.add.sprite(player.x + 24 , player.y - 30, 'bullet'));
         console.log("Created New Bullet");
+        initialTime = 10;
     }
-    
     updateBullets();
+    initialTime --; // One second
+    
     
     // Movement
     
