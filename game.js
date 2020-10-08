@@ -6,8 +6,12 @@ let value = 0;
 let isKeyUp = false;
 let isKeyDown = false;
 let player;
+<<<<<<< HEAD
 let lerpSpeed = 1;
 
+=======
+let initialTime = 0;
+>>>>>>> f6d14b88ae4be6dac7b098e0f57a675c1dde8884
 
 var config = {
     type: Phaser.AUTO,
@@ -38,22 +42,28 @@ function preload()
 function create()
 {
     
-    player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 2,'player');
+    player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
 }
 
 function update()
 {
-    if(game.input.activePointer.isDown)
+    if(game.input.activePointer.isDown && initialTime <= 0)
     {
-        bullets.push(this.add.sprite(player.x + 23 , player.y - 37, 'bullet'));
+        bullets.push(this.add.sprite(player.x + 24 , player.y - 30, 'bullet'));
         console.log("Created New Bullet");
+        initialTime = 10;
     }
+<<<<<<< HEAD
 
 
     player.x = this.input.mousePointer.x;
 
     
+=======
+>>>>>>> f6d14b88ae4be6dac7b098e0f57a675c1dde8884
     updateBullets();
+    initialTime --; // One second
+    
     
     // Movement
     
