@@ -1,3 +1,13 @@
+let bullets = [];
+let bulletSpeed = 10;
+let movementSpeed = 20;
+let velocity = 10;
+let value = 0;
+let isKeyUp = false;
+let isKeyDown = false;
+let player;
+
+
 var config = {
     type: Phaser.AUTO,
     width: window.innerWidth,
@@ -5,7 +15,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 }
+
         }
     },
     scene: {
@@ -19,18 +29,63 @@ var game = new Phaser.Game(config);
 
 function preload()
 {
-    game.load.image('player', 'images/monkey-1b.png');
+    this.load.image('player', 'images/monkey-1b.png');
+    this.load.image('bullet', 'images/banan.png');
 }
 
 function create()
 {
-    game.physics.startsSystem(Phaser.Physics.ARCADE);
+    player = this.physics.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'player');
+    bullet = this.add.sprite((window.innerWidth / 2) + 100, window.innerHeight / 2, 'bullet')
 
-    game.add.Sprites(0,0,'player');
-
+    this.input.keyboard.on('keydown_A', keysDown, this);
+    this.input.keyboard.on('keydown_D', keysDown, this);
+    this.input.keyboard.on('keyup_A', keysUp, this);
+    this.input.keyboard.on('keyup_A', keysUp, this);
 }
 
 function update()
 {
+    // Movement
+
+
 
 }
+
+// Movement   
+function keysUp(e)
+{
+    console.log(e.keyCode);
+
+    if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.D) 
+    {
+        isKeyUp = true;
+    }
+    else if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.A) 
+    {
+        isKeyUp = true;
+    }
+}
+
+function keysDown(e)
+{
+    console.log(e.keyCode);
+    if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.D) 
+    {
+        player.setVelocityX(100);
+    }
+    else if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.A) 
+    {
+
+    }
+}
+
+/*
+function movePlayer(e)
+{
+    let pos = e.data.global;
+
+    player.x = pos.x;
+    player.y = pos.y;
+}
+*/
