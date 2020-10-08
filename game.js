@@ -6,6 +6,7 @@ let value = 0;
 let isKeyUp = false;
 let isKeyDown = false;
 let player;
+let lerpSpeed = 1;
 
 
 var config = {
@@ -38,11 +39,6 @@ function create()
 {
     
     player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 2,'player');
-    
-    this.input.keyboard.on('keydown_A', keysDown, this);
-    this.input.keyboard.on('keydown_D', keysDown, this);
-    this.input.keyboard.on('keyup_A', keysUp, this);
-    this.input.keyboard.on('keyup_A', keysUp, this);
 }
 
 function update()
@@ -52,6 +48,10 @@ function update()
         bullets.push(this.add.sprite(player.x + 23 , player.y - 37, 'bullet'));
         console.log("Created New Bullet");
     }
+
+
+    player.x = this.input.mousePointer.x;
+
     
     updateBullets();
     
