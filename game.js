@@ -7,6 +7,10 @@ let isKeyUp = false;
 let isKeyDown = false;
 let player;
 let initialTime = 0;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 424ac4e6c3281f42331aee819ab6e7846e6ee965
 
 var config = {
     type: Phaser.AUTO,
