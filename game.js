@@ -6,12 +6,7 @@ let value = 0;
 let isKeyUp = false;
 let isKeyDown = false;
 let player;
-<<<<<<< HEAD
-let lerpSpeed = 1;
-
-=======
 let initialTime = 0;
->>>>>>> f6d14b88ae4be6dac7b098e0f57a675c1dde8884
 
 var config = {
     type: Phaser.AUTO,
@@ -53,50 +48,13 @@ function update()
         console.log("Created New Bullet");
         initialTime = 10;
     }
-<<<<<<< HEAD
 
-
+    // Updates Player Moverment
     player.x = this.input.mousePointer.x;
-
+    player.y = window.innerHeight / 1.18;
     
-=======
->>>>>>> f6d14b88ae4be6dac7b098e0f57a675c1dde8884
     updateBullets();
-    initialTime --; // One second
-    
-    
-    // Movement
-    
-    
-    
-}
-
-// Movement   
-function keysUp(e)
-{
-    console.log(e.keyCode);
-    
-    if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.D) 
-    {
-        isKeyUp = true;
-    }
-    else if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.A) 
-    {
-        isKeyUp = true;
-    }
-}
-
-function keysDown(e)
-{
-    console.log(e.keyCode);
-    if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.D) 
-    {
-        player.setVelocityX(100);
-    }
-    else if (e.keyCode === Phaser.Input.Keyboard.KeyCodes.A) 
-    {
-        
-    }
+    initialTime--; // One second
 }
 
 function updateBullets()
@@ -104,17 +62,14 @@ function updateBullets()
     for (let i = 0; i < bullets.length; i++){
         bullets[i].y -= bulletSpeed;
 
-        if(bullets[i].y < 0){
-            bullets[i].dead = true;
+        console.log(bullets[i].y)
+        if(bullets[i].y < 0)
+        {
+            bullets[i].destroy();
+            bullets.splice(i, 1);
         }
     }
-
-    for (let i = 0; i < bullets.length; i++){
-
-        if(bullets[i].dead){
-            bullets.splice(i,1);
-        }
-    }
+    console.log(bullets);
 }
 
 /*
