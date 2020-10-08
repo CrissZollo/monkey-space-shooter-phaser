@@ -7,10 +7,7 @@ let isKeyUp = false;
 let isKeyDown = false;
 let player;
 let initialTime = 0;
-<<<<<<< HEAD
-
-=======
->>>>>>> 424ac4e6c3281f42331aee819ab6e7846e6ee965
+let coconuts;
 
 var config = {
     type: Phaser.AUTO,
@@ -36,12 +33,24 @@ function preload()
 {
     this.load.image('player', 'images/monkey-1b.png');
     this.load.image('bullet', 'images/banan2.png');
+    this.load.image('coconut', 'images/coconut.png');
 }
 
 function create()
 {
     // Skapar Apan//
     player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
+    coconut = this.add.sprite(x=0, y=0, 'coconut');
+
+    coconuts = this.physics.add.group({
+        key: 'coconut',
+        repeat: 5,
+        setXY: {
+          x: 80,
+          y: 140,
+          stepX: 500,
+        }
+      });
 
 }
 
@@ -58,7 +67,7 @@ function update()
 
     // Updates Player Moverment
     player.x = this.input.mousePointer.x;
-    player.y = window.innerHeight / 1.18;
+    player.y = window.innerHeight / 1.17;
     
     updateBullets();
     initialTime--; // One second
