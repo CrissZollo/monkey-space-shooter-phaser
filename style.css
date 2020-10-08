@@ -5,38 +5,46 @@ body{
     align-items:center;
     justify-content: center;
     cursor:none;
-}
-
-#startGame{
     background-color: black;
-    width: 100%;
-    height:100px;
-    text-align: center;
-    padding-top:5%;
-    padding-bottom: 10%;
-    color:White;
+    background-image:url("images/djungel.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-.leftImg{
-    height:100px;
-    float: left;
+/*Container för Start/Restart Headern*/
+#startGame{
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    height:30px;
+    padding-top:2%;
+    padding-bottom: 2%;
+    color:White;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
 }
 
-.rightImg{
+/* Bananbilderna i header*/
+.leftImg, .rightImg{
     height:100px;
-    float: right;
 }
+
+
 h1{
     color:white;
-    font-size: 40px;    
+    font-size: 30px;    
     font-family: 'Orbitron';
-    margin-right:0;
+    margin:0;
+    padding:0;
+    display: block;
 }
 
-#startBtn{
+/*Restart och Startknapparna*/
+#startBtn, #restartBtn{
     display:block;
-    font-size: 1.5rem;
-    margin:1.5rem auto;
-    padding:0.5rem 1rem;
+    font-size: 1rem;
+    padding:0.6rem 0.6rem;
     color: white;
     background-color: rgb(25, 173, 45);
     border-radius: 8px;
@@ -46,7 +54,32 @@ h1{
     font-family: 'Orbitron';
 }
 
-#startBtn:hover{
+#startBtn:hover, #restartBtn:hover{
     opacity: 0.8;
     cursor: pointer;
+}
+
+#startBtn{
+    margin-left: 5%;
+}
+
+#restartBtn{
+    margin-right: 5%;
+}
+
+@media (max-width:1320px){
+    #startGame{
+        height:30px;
+        padding:10px;
+    }
+    .leftImg,.rightImg{
+        height:35px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    #startBtn, #restartBtn{
+        font-size: 14px;
+        padding:3px;
+    }
 }
