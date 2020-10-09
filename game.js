@@ -48,7 +48,7 @@ function create()
         coconuts.push(this.add.sprite(100 + 100 * i, 40, 'coconut'))
     }
 }
-
+//Marqus//
 function update()
 {
     //Skapar en bullet med en timer som skjuts från apan//
