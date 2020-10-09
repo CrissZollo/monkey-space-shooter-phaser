@@ -12,10 +12,13 @@ let timer = 0;
 // !!!VERY IMPORTANT DO NOT REMOVE!!!
 let deltaTime = 0;
 
+let initialTime = 0;
+let coconuts = [];
+let coconutSpeed = 10;
 
 var config = {
     type: Phaser.AUTO,
-    width: window.innerWidth,
+    width: 1000,
     height: window.innerHeight,
     transparent: true,
     physics: {
@@ -39,6 +42,7 @@ function preload()
     this.load.image('bullet', 'images/banan2.png');
     this.load.audio('takingDamage', 'audio/monkey-cry.ogg');
     this.load.audio('destroy', 'audio/destroy.wav');
+    this.load.image('coconut', 'images/coconut3.png');
 }
 
 function create()
@@ -51,7 +55,12 @@ function create()
     takingDamage = this.sound.add('takingDamage');
     destroy = this.sound.add('destroy');
     destroy.allowMultiple = true;
-    takingDamage.allowMultiple = true;
+    takingDamage.allowMultiple = true;    
+    
+    for(let i = 0; i < 9; i++)
+    {
+        coconuts.push(this.add.sprite(100 + 100 * i, 40, 'coconut'))
+    }
 }
 
 function getTime()
@@ -95,9 +104,10 @@ function update()
 
     // Updates Player Moverment
     player.x = this.input.mousePointer.x;
-    player.y = window.innerHeight / 1.18;
+    player.y = window.innerHeight / 1.17;
     
     updateBullets();
+    updateCoconuts();
     timer -= deltaTime; // One second
     console.log(timer);
 }
@@ -116,7 +126,21 @@ function updateBullets()
             bullets.splice(i, 1);
         }
     }
-    //console.log(bullets);
+}
+
+//Skapar coc
+function updateCoconuts()
+{
+    for (let i = 0; i < coconuts.length; i++){
+        coconuts[i].y += coconutSpeed;
+
+        console.log(coconuts[i].y)
+        if(coconuts[i].y > window.innerHeight + 50)
+        {
+            coconuts[i].destroy();
+            coconuts.splice(i, 1);
+        }
+    }
 }
 
 /*
