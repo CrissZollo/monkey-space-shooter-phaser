@@ -7,11 +7,12 @@ let isKeyUp = false;
 let isKeyDown = false;
 let player;
 let initialTime = 0;
-let coconuts;
+let coconuts = [];
+let coconutSpeed = 10;
 
 var config = {
     type: Phaser.AUTO,
-    width: window.innerWidth,
+    width: 1000,
     height: window.innerHeight,
     transparent: true,
     physics: {
@@ -33,30 +34,23 @@ function preload()
 {
     this.load.image('player', 'images/monkey-1b.png');
     this.load.image('bullet', 'images/banan2.png');
-    this.load.image('coconut', 'images/coconut.png');
+    this.load.image('coconut', 'images/coconut3.png');
 }
 
 function create()
 {
     // Skapar Apan//
     player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
-    coconut = this.add.sprite(x=0, y=0, 'coconut');
+    
 
-    coconuts = this.physics.add.group({
-        key: 'coconut',
-        repeat: 5,
-        setXY: {
-          x: 80,
-          y: 140,
-          stepX: 500,
-        }
-      });
-
+    for(let i = 0; i < 9; i++)
+    {
+        coconuts.push(this.add.sprite(100 + 100 * i, 40, 'coconut'))
+    }
 }
 
 function update()
 {
-
     //Skapar en bullet med en timer som skjuts från apan//
     if(game.input.activePointer.isDown && initialTime <= 0)
     {
@@ -71,8 +65,9 @@ function update()
     
     updateBullets();
     initialTime--; // One second
-}
 
+    updateCoconuts();
+;}
 
 //Funktionen för bananerna//
 function updateBullets()
@@ -87,7 +82,21 @@ function updateBullets()
             bullets.splice(i, 1);
         }
     }
-    console.log(bullets);
+}
+
+//Skapar coc
+function updateCoconuts()
+{
+    for (let i = 0; i < coconuts.length; i++){
+        coconuts[i].y += coconutSpeed;
+
+        console.log(coconuts[i].y)
+        if(coconuts[i].y > window.innerHeight + 50)
+        {
+            coconuts[i].destroy();
+            coconuts.splice(i, 1);
+        }
+    }
 }
 
 /*

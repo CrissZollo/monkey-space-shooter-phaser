@@ -67,6 +67,14 @@ h1{
     margin-right: 5%;
 }
 
+canvas{
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    border-left: 3px solid rgba(0,0,0,0.8);
+    border-right: 3px solid rgba(0,0,0,0.8);
+}
+
 @media (max-width:1320px){
     #startGame{
         height:30px;
