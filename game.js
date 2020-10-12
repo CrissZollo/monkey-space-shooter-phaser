@@ -8,18 +8,24 @@ let takingDamage;
 let destroy;
 let start = 0;
 let timer = 0;
+let spawnTimer = 0;
 
 // !!!VERY IMPORTANT DO NOT REMOVE!!!
 let deltaTime = 0;
 
 let initialTime = 0;
 let coconuts = [];
-let coconutSpeed = 10;
+let coconutSpeed = 5;
+
+
+// Canvas size
+let canvasX = 1000;
+let canvasY = window.innerHeight;
 
 var config = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: window.innerHeight,
+    width: canvasX,
+    height: canvasY,
     transparent: true,
     physics: {
         default: 'arcade',
@@ -34,8 +40,9 @@ var config = {
     }
 };
 
-var game = new Phaser.Game(config);
+var game = new Phaser.Game(config); 
 
+// Loads in all objects that will be created
 function preload()
 {
     this.load.image('player', 'images/monkey-1b.png');
@@ -45,6 +52,7 @@ function preload()
     this.load.image('coconut', 'images/coconut3.png');
 }
 
+// Creates all new sprites, audio and more
 function create()
 {
 
@@ -57,89 +65,93 @@ function create()
     destroy.allowMultiple = true;
     takingDamage.allowMultiple = true;    
     
-    for(let i = 0; i < 9; i++)
-    {
-        coconuts.push(this.add.sprite(100 + 100 * i, 40, 'coconut'))
-    }
 }
-<<<<<<< HEAD
-//Marqus//
-=======
 
+// Get how many seconds from 1 Jan 1970 00:00:00
 function getTime()
 {
     let d = new Date();
-
+    
     return d.getTime();
 }
 
+// Return time between frames in milliseconds
 function time()
 {
     deltaTime = (getTime()-start) / 1000;
-
-    //console.log("Delta Time: " + deltaTime);
-
+    
     start = getTime();
     
     return deltaTime;
 }
 
->>>>>>> eb5052d0959167c5b36b0386aae01eaf7d6408cc
+// Updates every frame
 function update()
 {
     deltaTime = time();
     
+    if (bullets.length >= 1) 
+    {
+        console.log(bullets[0].x)
+        
+    }
     
-    //Skapar en bullet med en timer som skjuts från apan//
+    // Skapar en bullet med en timer som skjuts från apan//
     if(game.input.activePointer.isDown && timer <= 0)
     {
+        if (timer <= 0) 
+        {
+            timer = 0.2;
+        }
+        
         bullets.push(this.add.sprite(player.x + 24 , player.y - 30, 'bullet'));
-        console.log("Created New Bullet");
-        
-        destroy.play();
-        
     }
+
     
-    if (timer <= 0) 
-    {
-        timer = 0.2;
-    }
-
-
+    
     // Updates Player Moverment
     player.x = this.input.mousePointer.x;
-    player.y = window.innerHeight / 1.17;
+    player.y = window.innerHeight - (player.height);
     
-    updateBullets();
-    updateCoconuts();
-    timer -= deltaTime; // One second
-    console.log(timer);
+    
+    updateBullets(); 
+
+    // Pattern spawner
+    if (spawnTimer <= 0) 
+    {
+        console.log(coconuts.length);
+        createPattern(this);
+        spawnTimer = 4;
+    }
+    updateCoconuts(); 
+    
+    timer -= deltaTime; // removes one second from timer
+    spawnTimer -= deltaTime; // removes one second from spawnTimer
 }
 
 
-//Funktionen för bananerna//
+// Updates Bullet logistics (position, isDead and more)
 function updateBullets()
 {
     for (let i = 0; i < bullets.length; i++){
         bullets[i].y -= bulletSpeed * deltaTime;
 
-        console.log(bullets[i].y)
         if(bullets[i].y < 0)
         {
             bullets[i].destroy();
-            bullets.splice(i, 1);
+            bullets.splice(i, 1);     
         }
     }
 }
 
-//Skapar coc
+// Updates Coconuts logistics (position, isDead and more)
 function updateCoconuts()
 {
-    for (let i = 0; i < coconuts.length; i++){
+    for (let i = 0; i < coconuts.length; i++)
+    {
         coconuts[i].y += coconutSpeed;
 
-        console.log(coconuts[i].y)
-        if(coconuts[i].y > window.innerHeight + 50)
+        if(coconuts[i].y > window.innerHeight - 100)
         {
             coconuts[i].destroy();
             coconuts.splice(i, 1);
@@ -147,13 +159,33 @@ function updateCoconuts()
     }
 }
 
-/*
-function movePlayer(e)
+
+// Creates a random spawn pattern for the Enemies
+function createPattern(create)
 {
-    let pos = e.data.global;
+    let patternNames = [
+        "arrow"
+    ];
+
+    let randomName = patternNames[Math.floor(Math.random()* patternNames.length)];
+
+    switch (randomName) {
+        case "arrow":
+            coconuts.push(create.add.sprite(canvasX / 2, -100, 'coconut'));    
+            
+            for(let i = 0; i < 8; i++)
+            {
+                coconuts.push(create.add.sprite(canvasX / 2 + 75 * i, 40 - 75 * i, 'coconut'))
+                coconuts.push(create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut'))
+            }
+            break;
+
+        case "":
     
-    player.x = pos.x;
-    player.y = pos.y;
+        default:
+            break;
+    }
+
+
+    return coconuts;
 }
-}
-*/
