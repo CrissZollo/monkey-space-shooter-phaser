@@ -4,7 +4,7 @@ body{
     margin: 0;
     align-items:center;
     justify-content: center;
-    cursor:none;
+    cursor:crosshair;
     background-color: black;
     background-image:url("images/djungel2.jpg");
     background-repeat: no-repeat;

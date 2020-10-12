@@ -8,6 +8,7 @@ let isKeyDown = false;
 let player;
 let initialTime = 0;
 let coconuts;
+let timer
 
 var config = {
     type: Phaser.AUTO,
@@ -38,6 +39,9 @@ function preload()
 
 function create()
 {
+
+    timer = this.time.create(false);
+
     // Skapar Apan//
     player = this.add.sprite(window.innerWidth / 2 ,window.innerHeight / 1.18,'player');
     coconut = this.add.sprite(x=0, y=0, 'coconut');
@@ -57,6 +61,7 @@ function create()
 function update()
 {
 
+    console.log(timer.elapsed);
     //Skapar en bullet med en timer som skjuts från apan//
     if(game.input.activePointer.isDown && initialTime <= 0)
     {
