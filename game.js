@@ -90,12 +90,6 @@ function update()
 {
     deltaTime = time();
     
-    if (bullets.length >= 1) 
-    {
-        console.log(bullets[0].x)
-        
-    }
-    
     // Skapar en bullet med en timer som skjuts från apan//
     if(game.input.activePointer.isDown && timer <= 0)
     {
@@ -119,7 +113,6 @@ function update()
     // Pattern spawner
     if (spawnTimer <= 0) 
     {
-        console.log(coconuts.length);
         createPattern(this);
         spawnTimer = 4;
     }
@@ -164,24 +157,64 @@ function updateCoconuts()
 function createPattern(create)
 {
     let patternNames = [
-        "arrow"
+        "arrow",
+        "cube",
+        "row",
+        "column"
     ];
 
     let randomName = patternNames[Math.floor(Math.random()* patternNames.length)];
+    let randomX = 0;
 
-    switch (randomName) {
-        case "arrow":
-            coconuts.push(create.add.sprite(canvasX / 2, -100, 'coconut'));    
-            
-            for(let i = 0; i < 8; i++)
+    switch ("cube") {
+        case "arrow":   
+        
+            coconuts.push(create.add.sprite(canvasX / 2, 40, 'coconut'));
+            for(let i = 1; i < 8; i++)
             {
-                coconuts.push(create.add.sprite(canvasX / 2 + 75 * i, 40 - 75 * i, 'coconut'))
-                coconuts.push(create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut'))
+                coconuts.push(create.add.sprite(canvasX / 2 + 75 * i, 40 - 75 * i, 'coconut'));
+                coconuts.push(create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut'));
             }
             break;
 
-        case "":
+        case "cube":
+            randomX = Math.floor(200 + Math.random() * ((canvasX-200) - 200));
+
+            let x = 1;                 
+
+            for (let i = 0; i < 4; i++) 
+            {
+                if (i == 0 || i == 4-1) 
+                {
+                    x = 3;  
+                }
+                else
+                {
+                    x = 1;
+                }
+                coconuts.push(create.add.sprite(randomX - (90/x), -60 * i, 'coconut'));
+                coconuts.push(create.add.sprite(randomX + (90/x), -60 * i, 'coconut'));
+            }
+            break;
     
+        case "row":
+            let amount = 10;
+            let offset = 50;
+            for (let i = 0; i < amount; i++)
+            {
+                coconuts.push(create.add.sprite(offset + canvasX / amount * i, 0, 'coconut'));
+            }
+            break;
+
+        case "column":
+            randomX = Math.floor(45 + Math.random() * ((canvasX-45) - 45));
+            for (let i = 0; i < 7; i++)
+            {
+                coconuts.push(create.add.sprite(randomX, -60 * i, 'coconut'));
+            }
+            break;
+
+
         default:
             break;
     }
