@@ -13,13 +13,15 @@ let destroy;
 let start = 0;
 let timer = 0;
 let spawnTimer = 0;
+let coconut;
+let bullet;
 
 // !!!VERY IMPORTANT DO NOT REMOVE!!!
 let deltaTime = 0;
 
 let initialTime = 0;
 let coconuts = [];
-let coconutSpeed = 5;
+let coconutSpeed = 125;
 
 
 // Canvas size
@@ -70,12 +72,12 @@ function create()
     start = new Date();
 
     // Skapar Apan//
-    player = this.add.sprite(window.innerWidth / 2, window.innerHeight / 1.18,  'player');
+    player = this.physics.add.sprite(window.innerWidth / 2, window.innerHeight / 1.18,  'player');
     takingDamage = this.sound.add('takingDamage');
     destroy = this.sound.add('destroy');
+
     destroy.allowMultiple = true;
-    takingDamage.allowMultiple = true;    
-    
+    takingDamage.allowMultiple = true;     
 }
 
 // Get how many seconds from 1 Jan 1970 00:00:00
@@ -110,12 +112,12 @@ function update()
             {
                 timer = 0.2;
             }
-            
-            bullets.push(this.add.sprite(player.x + 24 , player.y - 30, 'bullet'));
+            bullet = this.add.sprite(player.x + 24 , player.y - 30, 'bullet');
+            bullets.push(bullet);
         }
 
         
-        
+
         // Updates Player Moverment
         player.x = this.input.mousePointer.x;
         player.y = window.innerHeight - (player.height);
@@ -127,27 +129,62 @@ function update()
         if (spawnTimer <= 0) 
         {
             createPattern(this);
-            spawnTimer = 4;
+            spawnTimer = 5;
         }
         updateCoconuts(); 
         
         timer -= deltaTime; // removes one second from timer
         spawnTimer -= deltaTime; // removes one second from spawnTimer
+
+        // Checks the collision between bullet and coconut
+        checkCollision();
     }
 }
 
 
+function checkCollision()
+{
+    if (bullets.length > 0 && coconuts.length > 0) 
+    {
+        for (let i = 0; i < bullets.length; i++) {
+            for (let j = 0; j < coconuts.length; j++) {
+                if ( Phaser.Math.Distance.Between(bullets[i].x, bullets[i].y, coconuts[j].x, coconuts[j].y) < 26 )
+                {
+                    bullets[i].destroy();
+                    bullets.splice(i, 1);
+                    coconuts[j].destroy();
+                    coconuts.splice(j, 1);
+                    return true;
+                }               
+            }
+        }
+
+        
+    }
+            for (let i = 0; i < coconuts.length; i++) {
+                if ( Phaser.Math.Distance.Between(player.x, player.y, coconuts[i].x, coconuts[i].y) < 75 )
+                {
+                    coconuts[i].destroy();
+                    coconuts.splice(i, 1);
+                    return true;
+                }               
+            }
+}
+
 // Updates Bullet logistics (position, isDead and more)
 function updateBullets()
 {
-    for (let i = 0; i < bullets.length; i++){
-        bullets[i].y -= bulletSpeed * deltaTime;
-
-        if(bullets[i].y < 0)
-        {
-            bullets[i].destroy();
-            bullets.splice(i, 1);     
-        }
+    if (bullets.length > 0)
+     {
+         for (let i = 0; i < bullets.length; i++){
+             bullets[i].y -= bulletSpeed * deltaTime;
+     
+             if(bullets[i].y < 0)
+             {
+                 bullets[i].destroy();
+                 bullets.splice(i, 1);     
+             }
+         }
     }
 }
 
@@ -156,9 +193,9 @@ function updateCoconuts()
 {
     for (let i = 0; i < coconuts.length; i++)
     {
-        coconuts[i].y += coconutSpeed;
+        coconuts[i].y += coconutSpeed * deltaTime;
 
-        if(coconuts[i].y > window.innerHeight - 100)
+        if(coconuts[i].y > window.innerHeight +50)
         {
             coconuts[i].destroy();
             coconuts.splice(i, 1);
@@ -177,17 +214,19 @@ function createPattern(create)
         "column"
     ];
 
-    let randomName = patternNames[Math.floor(Math.random()* patternNames.length)];
+    let randomName = patternNames[Math.floor(Math.random() * patternNames.length)];
     let randomX = 0;
 
     switch (randomName) {
         case "arrow":   
-        
-            coconuts.push(create.add.sprite(canvasX / 2, 40, 'coconut'));
+            coconut = create.add.sprite(canvasX / 2, 40, 'coconut');
+            coconuts.push(coconut);
             for(let i = 1; i < 8; i++)
             {
-                coconuts.push(create.add.sprite(canvasX / 2 + 75 * i, 40 - 75 * i, 'coconut'));
-                coconuts.push(create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut'));
+                coconut = create.add.sprite(canvasX / 2 + 75 * i, 40 - 75 * i, 'coconut');
+                coconuts.push(coconut);
+                coconut = create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut');
+                coconuts.push(coconut);
             }
             break;
 
@@ -212,7 +251,7 @@ function createPattern(create)
             break;
     
         case "row":
-            let amount = 10;
+            let amount = 6;
             let offset = 50;
             for (let i = 0; i < amount; i++)
             {
