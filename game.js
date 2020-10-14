@@ -14,7 +14,7 @@ let deltaTime = 0;
 
 let initialTime = 0;
 let coconuts = [];
-let coconutSpeed = 10;
+let coconutSpeed = 0.5;
 
 var config = {
     type: Phaser.AUTO,
@@ -57,19 +57,21 @@ function create()
     destroy.allowMultiple = true;
     takingDamage.allowMultiple = true;    
     
-    for(let i = 0; i < 9; i++)
+    for(let i = 0; i < 8; i++)
     {
-        coconuts.push(this.add.sprite(100 + 100 * i, 40, 'coconut'))
+        coconuts.push(this.add.sprite(100 + 100 * Math.floor(Math.random()*9), -20, 'coconut'))
+        coconuts.push(this.add.sprite(100 + 100 * Math.floor(Math.random()*9), -80, 'coconut'))
+        coconuts.push(this.add.sprite(100 + 100 * Math.floor(Math.random()*9), -140, 'coconut'))
     }
+
+    this.physics.add.overlap(this.player, this.coconuts, this.hurtPlayer, null, this);
+    this.physics.add.overlap(this.bullets, this.coconuts, this.hitEnemy, null, this);
 }
-<<<<<<< HEAD
 //Marqus//
-=======
 
 function getTime()
 {
     let d = new Date();
-
     return d.getTime();
 }
 
@@ -84,7 +86,6 @@ function time()
     return deltaTime;
 }
 
->>>>>>> eb5052d0959167c5b36b0386aae01eaf7d6408cc
 function update()
 {
     deltaTime = time();
@@ -145,6 +146,18 @@ function updateCoconuts()
             coconuts.splice(i, 1);
         }
     }
+}
+
+hurtPlayer(player, coconuts)
+{
+    this.destroy(coconuts);
+        
+}
+
+hitEnemy(bullets, coconuts)
+{
+    bullets.destroy();
+    coconuts.destroy();
 }
 
 /*

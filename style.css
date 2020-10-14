@@ -4,17 +4,10 @@ body{
     margin: 0;
     align-items:center;
     justify-content: center;
-<<<<<<< HEAD
     cursor:crosshair;
     background-color: black;
-    background-image:url("images/djungel2.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-=======
     cursor:none;
     background-color: rgb(0,0,0);
->>>>>>> 280d00127137db63a0e18e87af94196b5a87fada
 }
 /*Container för Start/Restart Headern*/
 #startGame{
