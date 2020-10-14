@@ -46,11 +46,10 @@ var config = {
     }
 };
 
-var game = new Phaser.Game(config); 
+var game = new Phaser.Game(config);
 
 // Loads in all objects that will be created
-function preload()
-{
+function preload() {
     this.load.image('player', 'images/monkey-1b.png');
     this.load.image('bullet', 'images/banan2.png');
     this.load.audio('takingDamage', 'audio/monkey-cry.ogg');
@@ -59,15 +58,13 @@ function preload()
 }
 
 
-function startGame()
-{
+function startGame() {
     gamePaused = false;
 }
 
 
 // Creates all new sprites, audio and more
-function create()
-{
+function create() {
 
     start = new Date();
 
@@ -80,36 +77,31 @@ function create()
     takingDamage.allowMultiple = true;     
 }
 
+
 // Get how many seconds from 1 Jan 1970 00:00:00
-function getTime()
-{
+function getTime() {
     let d = new Date();
-    
+
     return d.getTime();
 }
 
 // Return time between frames in milliseconds
-function time()
-{
-    deltaTime = (getTime()-start) / 1000;
-    
+function time() {
+    deltaTime = (getTime() - start) / 1000;
+
     start = getTime();
-    
+
     return deltaTime;
 }
 
 // Updates every frame
-function update()
-{
-    if (gamePaused = true)
-    {
+function update() {
+    if (gamePaused = true) {
         deltaTime = time();
-        
+
         // Skapar en bullet med en timer som skjuts från apan//
-        if(game.input.activePointer.isDown && timer <= 0)
-        {
-            if (timer <= 0) 
-            {
+        if (game.input.activePointer.isDown && timer <= 0) {
+            if (timer <= 0) {
                 timer = 0.2;
             }
             bullet = this.add.sprite(player.x + 24 , player.y - 30, 'bullet');
@@ -121,18 +113,17 @@ function update()
         // Updates Player Moverment
         player.x = this.input.mousePointer.x;
         player.y = window.innerHeight - (player.height);
-        
-        
-        updateBullets(); 
+
+
+        updateBullets();
 
         // Pattern spawner
-        if (spawnTimer <= 0) 
-        {
+        if (spawnTimer <= 0) {
             createPattern(this);
             spawnTimer = 5;
         }
-        updateCoconuts(); 
-        
+        updateCoconuts();
+
         timer -= deltaTime; // removes one second from timer
         spawnTimer -= deltaTime; // removes one second from spawnTimer
 
@@ -205,8 +196,7 @@ function updateCoconuts()
 
 
 // Creates a random spawn pattern for the Enemies
-function createPattern(create)
-{
+function createPattern(create) {
     let patternNames = [
         "arrow",
         "cube",
@@ -231,38 +221,32 @@ function createPattern(create)
             break;
 
         case "cube":
-            randomX = Math.floor(200 + Math.random() * ((canvasX-200) - 200));
+            randomX = Math.floor(200 + Math.random() * ((canvasX - 200) - 200));
 
-            let x = 1;                 
+            let x = 1;
 
-            for (let i = 0; i < 4; i++) 
-            {
-                if (i == 0 || i == 4-1) 
-                {
-                    x = 3;  
-                }
-                else
-                {
+            for (let i = 0; i < 4; i++) {
+                if (i == 0 || i == 4 - 1) {
+                    x = 3;
+                } else {
                     x = 1;
                 }
-                coconuts.push(create.add.sprite(randomX - (90/x), -60 * i, 'coconut'));
-                coconuts.push(create.add.sprite(randomX + (90/x), -60 * i, 'coconut'));
+                coconuts.push(create.add.sprite(randomX - (90 / x), -60 * i, 'coconut'));
+                coconuts.push(create.add.sprite(randomX + (90 / x), -60 * i, 'coconut'));
             }
             break;
-    
+
         case "row":
             let amount = 6;
             let offset = 50;
-            for (let i = 0; i < amount; i++)
-            {
+            for (let i = 0; i < amount; i++) {
                 coconuts.push(create.add.sprite(offset + canvasX / amount * i, 0, 'coconut'));
             }
             break;
 
         case "column":
-            randomX = Math.floor(45 + Math.random() * ((canvasX-45) - 45));
-            for (let i = 0; i < 7; i++)
-            {
+            randomX = Math.floor(45 + Math.random() * ((canvasX - 45) - 45));
+            for (let i = 0; i < 7; i++) {
                 coconuts.push(create.add.sprite(randomX, -60 * i, 'coconut'));
             }
             break;
