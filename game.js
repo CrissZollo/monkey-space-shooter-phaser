@@ -49,6 +49,8 @@ var game = new Phaser.Game(config);
 // Loads in all objects that will be created
 function preload() {
     this.load.image('player', 'images/monkey-1b.png');
+    this.load.image('bar', 'images/bar.png');
+    this.load.image('health', 'images/health.png');
     this.load.image('bullet', 'images/banan2.png');
     this.load.audio('takingDamage', 'audio/monkey-cry.ogg');
     this.load.audio('destroy', 'audio/destroy.wav');
