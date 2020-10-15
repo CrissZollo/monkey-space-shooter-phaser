@@ -5,13 +5,10 @@ body {
     align-items: center;
     justify-content: center;
     cursor: crosshair;
-    background-color: black;
-    background-image: url("images/djungel2.jpg");
+    background-image: url("images/palm.jpg");
     background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
     cursor: none;
-    background-color: rgb(0, 0, 0);
 }
 
 /*Container för Start/Restart Headern*/
@@ -72,6 +69,20 @@ h1 {
 #restartBtn {
     margin-right: 5%;
 }
+
+/* .coco1 {
+    background-image: url("images/halvcoconut1.png");
+    background-repeat: repeat;
+    position: absolute;
+    display: flex;
+}
+
+.coco2 {
+    background-image: url("images/halvcoconut2.png");
+    background-repeat: repeat;
+    position: absolute;
+    display: flex;
+} */
 
 canvas {
     position: absolute;
