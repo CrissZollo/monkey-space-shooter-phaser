@@ -78,6 +78,8 @@ function create() {
     health = this.add.sprite(player.x, player.y, 'health');
     bar = this.add.sprite(health.x, health.y, 'bar');
 
+    health.setOrigin(defaultHealthWidth /2, health.displayHeight / 2);
+
     scoreText = this.add.text(50, 50, 'Score: 0', {
         fontFamily: 'Orbitron',
         color: 'black',
@@ -127,17 +129,19 @@ function time() {
     return deltaTime;
 }
 
+// start Game
 function startGame() {
     gamePaused = false;
 }
 
+// Restart Game
 function restartGame() {
     score = 0;
     scoreText.setText('Score: ' + score);
     healthValue = 100;
-    health.x = player.x;
+    health.x += defaultHealthWidth / 2;
     health.displayWidth = defaultHealthWidth;
-    health.setOrigin(0, 0);
+    health.setOrigin(0, 0.5);
     gameOverText.setText('');
 
     for (let j = 0; j < coconuts.length; j++) {
