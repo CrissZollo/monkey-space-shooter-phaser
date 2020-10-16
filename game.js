@@ -140,6 +140,7 @@ function startGame() {
 
 function restartGame() {
     score = 0;
+    coconutSpeed = 125;
     scoreText.setText('Score: ' + score);
     healthValue = 100;
     calculatedX = 0;
@@ -177,9 +178,8 @@ function update() {
 
 
 
-        if (score >= 1000) 
-        {
-            gameOverText.setText('YOU WIN')   
+        if (score >= 1000) {
+            gameOverText.setText('YOU WIN')
 
             for (let j = 0; j < coconuts.length; j++) {
                 coconuts[j].destroy();
@@ -215,9 +215,7 @@ function update() {
             coconutSpeed += 5;
             if (score > 500) {
                 spawnTimer = 4;
-            }
-            else
-            {
+            } else {
                 spawnTimer = 6;
             }
         }

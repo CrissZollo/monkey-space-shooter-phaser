@@ -8,7 +8,7 @@ body {
     background-image: url("images/palm.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    cursor: none;
+    cursor: crosshair;
 }
 
 /*Container för Start/Restart Headern*/
@@ -17,7 +17,7 @@ body {
     width: 100%;
     height: 30px;
     padding-top: 1.5%;
-    padding-bottom: 1%;
+    padding-bottom: 1.5%;
     color: White;
     display: flex;
     align-items: center;
