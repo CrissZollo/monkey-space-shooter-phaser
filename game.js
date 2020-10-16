@@ -65,6 +65,8 @@ function preload() {
     this.load.audio('takingDamage', 'audio/monkey-cry.ogg');
     this.load.audio('destroy', 'audio/destroy.wav');
     this.load.audio('donk', 'audio/donk.wav')
+    this.load.audio('shoot', 'audio/shoot.wav');
+    this.load.audio('explosion', 'audio/explosion.mp3');
     this.load.image('coconut', 'images/coconut3.png');
 }
 
@@ -109,6 +111,8 @@ function create() {
     takingDamage = this.sound.add('takingDamage');
     destroy = this.sound.add('destroy');
     donk = this.sound.add('donk');
+    shoot = this.sound.add('shoot');
+    explosion = this.sound.add('explosion');
 
     destroy.allowMultiple = true;
     takingDamage.allowMultiple = true;
@@ -168,9 +172,26 @@ function update() {
             }
             bullet = this.add.sprite(player.x + 24, player.y - 30, 'bullet');
             bullets.push(bullet);
+            shoot.play();
         }
 
 
+
+        if (score >= 1000) 
+        {
+            gameOverText.setText('YOU WIN')   
+
+            for (let j = 0; j < coconuts.length; j++) {
+                coconuts[j].destroy();
+            }
+            for (let j = 0; j < bullets.length; j++) {
+                bullets[j].destroy();
+            }
+            bullets = [];
+            coconuts = [];
+            restartBtn.disabled = false;
+            gamePaused = true;
+        }
 
         // Updates Player Moverment
         player.x = this.input.mousePointer.x;
@@ -191,7 +212,14 @@ function update() {
         // Pattern spawner
         if (spawnTimer <= 0) {
             createPattern(this);
-            spawnTimer = 5;
+            coconutSpeed += 5;
+            if (score > 500) {
+                spawnTimer = 4;
+            }
+            else
+            {
+                spawnTimer = 6;
+            }
         }
         updateCoconuts();
 
@@ -213,7 +241,7 @@ function checkCollision() {
                     bullets[i].destroy();
                     bullets.splice(i, 1);
                     coconuts[j].destroy();
-                    donk.play();
+                    explosion.play();
                     coconuts.splice(j, 1);
                     score += 10;
                     scoreText.setText('Score: ' + score);
