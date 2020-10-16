@@ -79,8 +79,6 @@ function create() {
     health = this.add.sprite(player.x, player.y, 'health');
     bar = this.add.sprite(health.x, health.y, 'bar');
 
-    health.setOrigin(defaultHealthWidth /2, health.displayHeight / 2);
-
     scoreText = this.add.text(50, 50, 'Score: 0', {
         fontFamily: 'Orbitron',
         color: 'black',
@@ -132,25 +130,17 @@ function time() {
     return deltaTime;
 }
 
-// start Game
 function startGame() {
     gamePaused = false;
 }
 
-// Restart Game
 function restartGame() {
     score = 0;
     scoreText.setText('Score: ' + score);
     healthValue = 100;
-<<<<<<< HEAD
-    health.x += defaultHealthWidth / 2;
-    health.displayWidth = defaultHealthWidth;
-    health.setOrigin(0, 0.5);
-=======
     calculatedX = 0;
     health.x = player.x;
     health.displayWidth = defaultHealthWidth;
->>>>>>> 7f0185e70bb2a9a8eddbc5f37fd53ecb52a2fd91
     gameOverText.setText('');
 
     for (let j = 0; j < coconuts.length; j++) {
@@ -246,6 +236,7 @@ function checkCollision() {
             // GAME OVER
             if (healthValue <= 0) {
                 gameOverText.setText('GAME OVER');
+
                 for (let j = 0; j < coconuts.length; j++) {
                     coconuts[j].destroy();
                 }
