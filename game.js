@@ -72,6 +72,7 @@ function preload() {
 function create() {
 
     start = new Date();
+    restartBtn.disabled = true;
 
     // Create Monkey and healthbar
     player = this.physics.add.sprite(canvasX / 2, canvasY / 1.18, 'player');
@@ -88,16 +89,18 @@ function create() {
         strokeThickness: '1'
     });
 
-    gameOverText = this.add.text(canvasX / 2, canvasY / 2, '', {
+    gameOverText = this.add.text(canvasX, canvasY, '', {
         fontFamily: 'Orbitron',
         color: 'black',
         fontSize: '5rem',
         stroke: 'black',
         strokeThickness: '1',
+        align: 'center'
     });
 
-    gameOverText.setDepth(9000);
-    scoreText.setDepth(9000);
+    gameOverText.setOrigin(0.5, 0.5);
+    gameOverText.setDepth(9001);
+    scoreText.setDepth(9001);
 
 
     //Values for healthbar
@@ -139,9 +142,15 @@ function restartGame() {
     score = 0;
     scoreText.setText('Score: ' + score);
     healthValue = 100;
+<<<<<<< HEAD
     health.x += defaultHealthWidth / 2;
     health.displayWidth = defaultHealthWidth;
     health.setOrigin(0, 0.5);
+=======
+    calculatedX = 0;
+    health.x = player.x;
+    health.displayWidth = defaultHealthWidth;
+>>>>>>> 7f0185e70bb2a9a8eddbc5f37fd53ecb52a2fd91
     gameOverText.setText('');
 
     for (let j = 0; j < coconuts.length; j++) {
@@ -153,7 +162,7 @@ function restartGame() {
     bullets = [];
     coconuts = [];
     spawnTimer = 1;
-
+    restartBtn.disabled = true;
     gamePaused = false;
 
 }
@@ -237,7 +246,6 @@ function checkCollision() {
             // GAME OVER
             if (healthValue <= 0) {
                 gameOverText.setText('GAME OVER');
-                gameOverText.setPosition(canvasX / 2, canvasY / 2);
                 for (let j = 0; j < coconuts.length; j++) {
                     coconuts[j].destroy();
                 }
@@ -246,6 +254,7 @@ function checkCollision() {
                 }
                 bullets = [];
                 coconuts = [];
+                restartBtn.disabled = false;
                 gamePaused = true;
             }
             return true;
