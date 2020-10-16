@@ -312,6 +312,9 @@ function updateCoconuts() {
 function createPattern(create) {
     let patternNames = [
         "arrow",
+        "reverseArrow",
+        "smallReverseArrow",
+        "smallArrow",
         "cube",
         "row",
         "column"
@@ -330,6 +333,44 @@ function createPattern(create) {
                 coconut = create.add.sprite(canvasX / 2 - 75 * i, 40 - 75 * i, 'coconut');
                 coconuts.push(coconut);
             }
+            break;
+
+            case "reverseArrow":
+
+                coconut = create.add.sprite(canvasX / 2, -550, 'coconut');
+                coconuts.push(coconut);
+                for (let i = 1; i < 8; i++) {
+                    coconut = create.add.sprite(canvasX / 2 + 75 * i, (-550 + 75 * i), 'coconut');
+                    coconuts.push(coconut);
+                    coconut = create.add.sprite(canvasX / 2 - 75 * i, (-550 + 75 * i), 'coconut');
+                    coconuts.push(coconut);
+                }
+            break;
+
+            case "smallReverseArrow":
+                randomX = Math.floor(200 + Math.random() * ((canvasX - 200) - 200));
+
+                coconut = create.add.sprite(randomX, -175, 'coconut');
+                coconuts.push(coconut);
+                for (let i = 1; i < 3; i++) {
+                    coconut = create.add.sprite(randomX + 75 * i, (-175 + 75 * i), 'coconut');
+                    coconuts.push(coconut);
+                    coconut = create.add.sprite(randomX - 75 * i, (-175 + 75 * i), 'coconut');
+                    coconuts.push(coconut);
+                }
+            break;
+
+            case "smallArrow":
+                randomX = Math.floor(200 + Math.random() * ((canvasX - 200) - 200));
+
+                coconut = create.add.sprite(randomX, 40, 'coconut');
+                coconuts.push(coconut);
+                for (let i = 1; i < 3; i++) {
+                    coconut = create.add.sprite(randomX + 75 * i, 40 - 75 * i, 'coconut');
+                    coconuts.push(coconut);
+                    coconut = create.add.sprite(randomX - 75 * i, 40 - 75 * i, 'coconut');
+                    coconuts.push(coconut);
+                }
             break;
 
         case "cube":
